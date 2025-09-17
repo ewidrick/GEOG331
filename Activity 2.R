@@ -39,3 +39,15 @@ datW$dateF <- as.Date(datW$DATE, "%Y-%m-%d")
 #create a date column by reformatting the date to only include years
 #and indicating that it should be treated as numeric data
 datW$year <- as.numeric(format(datW$dateF,"%Y"))
+
+#Q2:
+# create 4 types of vectors
+Character_Vector <- c("GEOG","331","Environmental","data","science")
+Numeric_Vector <- c(1.23,4.56,7.89,100,1064)
+Integer_Vector <- c(1L,2L,3L,4L,5L)
+Factor_Vector <- factor(c( "red", "orange","yellow", "blue", "green", "indego", "violet"))
+# check vector types
+print(class(Character_Vector))
+print(class(Numeric_Vector))
+print(class(Integer_Vector))
+print(class(Factor_Vector))
