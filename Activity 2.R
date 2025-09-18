@@ -284,7 +284,33 @@ pnorm(5,
 1 - pnorm(20,
           mean(datW$TAVE[datW$siteN == 1],na.rm=TRUE),
           sd(datW$TAVE[datW$siteN == 1],na.rm=TRUE))  
-#qnorm of 0.95 gives me the value associated with a 0.95 chance of occuring. 
+#qnorm of 0.95 gives me the value of the 95th percentile.
 qnorm(0.95,
       mean(datW$TAVE[datW$siteN == 1],na.rm=TRUE),
       sd(datW$TAVE[datW$siteN == 1],na.rm=TRUE))
+
+#Q7:
+hist(datW$PRCP[datW$siteN == 1],
+     freq=FALSE, 
+     main = paste(levels(datW$NAME)[1]),
+     xlab = "Daily Precipitaion", 
+     ylab="Relative frequency",
+     col="grey50",
+     border="white")
+#add mean line with black (black) color
+#and thickness of 3
+abline(v = mean(datW$PRCP[datW$siteN == 1],na.rm=TRUE), 
+       col = "black",
+       lwd = 3)
+#add standard deviation line below the mean with black (black) color
+#and thickness of 3
+abline(v = mean(datW$PRCP[datW$siteN == 1],na.rm=TRUE) - sd(datW$TAVE[datW$siteN == 1],na.rm=TRUE), 
+       col = "black", 
+       lty = 3,
+       lwd = 3)
+#add standard deviation line above the mean with black (black) color
+#and thickness of 3
+abline(v = mean(datW$PRCP[datW$siteN == 1],na.rm=TRUE) + sd(datW$TAVE[datW$siteN == 1],na.rm=TRUE), 
+       col = "black", 
+       lty = 3,
+       lwd = 3)
