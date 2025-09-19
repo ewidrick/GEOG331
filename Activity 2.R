@@ -314,3 +314,24 @@ abline(v = mean(datW$PRCP[datW$siteN == 1],na.rm=TRUE) + sd(datW$TAVE[datW$siteN
        col = "black", 
        lty = 3,
        lwd = 3)
+
+#Q8:
+#take the daily precipitation for every year and location and sum them up to get perspiration per year 
+annual_precip <- aggregate(datW$PRCP, by=list(datW$year, datW$NAME), FUN="sum",na.rm=TRUE)
+#change the automatic output of column names to be more meaningful
+colnames(annual_precip) <- c("Year","Name","mm")
+help("hist")
+#make a histogram for Morrisville SW 6
+hist(annual_precip$mm[annual_precip$Name == "MORRISVILLE 6 SW, NY US"],
+     freq=FALSE, 
+     main = "MORRISVILLE 6 SW, NY US",
+     xlab = "Annual Precipitation (mm)", 
+     ylab="Relative frequency",
+     col="grey50",
+     border="white")
+
+#Q9
+# take the average of the annual precipitation for each site
+Avg_annual_percip <- aggregate(annual_precip$mm, by=list(annual_precip$Name), FUN="mean",na.rm=TRUE)
+# change column names to NAME and average annual precipitation (AAP)
+colnames(Avg_annual_percip) <- c("NAME","AAP")
