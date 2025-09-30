@@ -24,6 +24,7 @@ a <- c(1,2,3,4)
 b <- c(8,4,5)
 assert(length(a) == length(b), "error: unequal length")
 
+#Q3
 #read in the data file
 #skip the first 3 rows since there is additional column info
 #specify the the NA is designated differently
