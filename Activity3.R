@@ -25,6 +25,7 @@ b <- c(8,4,5)
 assert(length(a) == length(b), "error: unequal length")
 
 #Q3
+
 #read in the data file
 #skip the first 3 rows since there is additional column info
 #specify the the NA is designated differently
@@ -59,27 +60,6 @@ datW$DD <- datW$doy + (datW$hour/24)
 #quick preview of new date calculations
 datW[1,]
 
-#see how many values have missing data for each sensor observation
-#air temperature
-length(which(is.na(datW$air.temperature)))
-
-#wind speed
-length(which(is.na(datW$wind.speed)))
-
-#precipitation
-length(which(is.na(datW$precipitation)))
-
-#soil temperature
-length(which(is.na(datW$soil.moisture)))
-
-#soil moisture
-length(which(is.na(datW$soil.temp)))
-
-#make a plot with filled in points (using pch)
-#line lines
-plot(datW$DD, datW$soil.moisture, pch=19, type="b", xlab = "Day of Year",
-     ylab="Soil moisture (cm3 water per cm3 soil)")
-
 #make a plot with filled in points (using pch)
 #line lines
 plot(datW$DD, datW$air.temperature, pch=19, type="b", xlab = "Day of Year",
@@ -95,6 +75,8 @@ plot(datW$DD, datW$air.temperature, pch=19, type="b", xlab = "Day of Year",
 #In this case it is just given the air temperature value
 datW$air.tempQ1 <- ifelse(datW$air.temperature < 0, NA, datW$air.temperature)
 
+#Q4
+
 #check the values at the extreme range of the data
 #and throughout the percentiles
 quantile(datW$air.tempQ1)
@@ -104,6 +86,8 @@ datW[datW$air.tempQ1 < 8,]
 
 #look at days with really high air temperature
 datW[datW$air.tempQ1 > 33,]  
+
+#Q5
 
 #plot precipitation and lightning strikes on the same plot
 #normalize lighting strikes to match precipitation
@@ -121,8 +105,33 @@ points(datW$DD[datW$precipitation > 0], datW$precipitation[datW$precipitation > 
 points(datW$DD[lightscale > 0], lightscale[lightscale > 0],
        col= "tomato3", pch=19)
 
+#A5
+
+#asserting that the sums of both lightscale and what makes up lightscale are equal
+assert(sum(lightscale) == sum((max(datW$precipitation)/max(datW$lightning.acvitivy)) * datW$lightning.acvitivy))
+
+#Q6
+
 #filter out storms in wind and air temperature measurements
 # filter all values with lightning that coincides with rainfall greater than 2mm or only rainfall over 5 mm.    
 #create a new air temp column
 datW$air.tempQ2 <- ifelse(datW$precipitation  >= 2 & datW$lightning.acvitivy >0, NA,
                           ifelse(datW$precipitation > 5, NA, datW$air.tempQ1))
+
+#A6
+
+#filter out storms in wind speed measurements
+# filter all values with lightning that coincides with rainfall greater than 2mm or only rainfall over 5 mm.    
+#create a new wind speed column
+datW$wind.speedQ1 <- ifelse(datW$precipitation  >= 2 & datW$lightning.acvitivy >0, NA,
+                          ifelse(datW$precipitation > 5, NA, datW$wind.speed))
+
+#Asserting that the number of NA values is the same in both the wind.speedQ1 and air.tempQ2 columns
+assert((length(which(is.na(datW$air.tempQ2)))) == length(which(is.na(datW$wind.speedQ1))))
+
+plot(datW$DD , datW$air.tempQ2, xlab = "Day of Year", ylab = "air temperature (Q2) + wind speed (Q1) ",
+     type="n")
+
+points(datW$DD,datW$wind.speedQ1,
+       col= "tomato3", pch=18)
+
