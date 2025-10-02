@@ -132,6 +132,6 @@ assert((length(which(is.na(datW$air.tempQ2)))) == length(which(is.na(datW$wind.s
 plot(datW$DD , datW$air.tempQ2, xlab = "Day of Year", ylab = "air temperature (Q2) + wind speed (Q1) ",
      type="n")
 
-points(datW$DD,datW$wind.speedQ1,
-       col= "tomato3", pch=18)
+points(datW$DD[datW$wind.speedQ1 >= 0], datW$wind.speedQ1[datW$wind.speedQ1 >=0 , col= "tomato3", pch=19)
+
 
