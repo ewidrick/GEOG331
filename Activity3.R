@@ -137,3 +137,45 @@ lines(datW$DD, datW$wind.speed)
 
 points(datW$DD[datW$wind.speedQ1 >0],datW$wind.speed[datW$wind.speedQ1 >0] ,col= "tomato3", pch=19)
 
+#A7
+
+#plot soil moisture and soil temp to see when the sensor cuts out
+plot(datW$doy, datW$soil.moisture)
+plot(datW$doy, datW$soil.temp)
+
+#plot air temperature and precipitation and observe the values leading up to day 192
+plot(datW$doy, datW$air.temperature)
+plot(datW$doy, datW$precipitation)
+
+#A8
+
+#take the mean while ignoring NA values
+
+mean(datW$air.tempQ2, na.rm = TRUE)
+
+mean(datW$wind.speedQ1, na.rm = TRUE)
+
+mean(datW$soil.moisture, na.rm = TRUE)
+
+mean(datW$soil.temp, na.rm = TRUE)
+
+#sum all the values for total precipitation
+
+sum(datW$precipitation)
+
+#Count number of observations
+#total of 2118 observations in the table
+#create a total observations variable and subtract the number of NAs for each column 
+
+TO = 2118 
+
+TO - length(which(is.na(datW$air.tempQ2)))
+
+TO - length(which(is.na(datW$wind.speedQ1)))
+
+TO - length(which(is.na(datW$soil.moisture)))
+
+TO - length(which(is.na(datW$soil.temp)))
+
+TO - length(which(is.na(datW$precipitation)))
+
