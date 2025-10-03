@@ -129,13 +129,16 @@ datW$wind.speedQ1 <- ifelse(datW$precipitation  >= 2 & datW$lightning.acvitivy >
 #Asserting that the number of NA values is the same in both the wind.speedQ1 and air.tempQ2 columns
 assert((length(which(is.na(datW$air.tempQ2)))) == length(which(is.na(datW$wind.speedQ1))))
 
-
+#plot the days of the year and wind speed
 plot(datW$DD , datW$wind.speedQ1, xlab = "Day of Year", ylab = "wind speed",
      type="n")
 
+# add lines for the original wind speed
 lines(datW$DD, datW$wind.speed)
 
-points(datW$DD[datW$wind.speedQ1 >0],datW$wind.speed[datW$wind.speedQ1 >0] ,col= "tomato3", pch=19)
+point_NA <- datW$wind.speedQ1 
+  
+points(datW$DD,datW$wind.speedQ1[point_NA],col= "tomato3", pch=19)
 
 #A7
 
@@ -179,3 +182,12 @@ TO - length(which(is.na(datW$soil.temp)))
 
 TO - length(which(is.na(datW$precipitation)))
 
+#A9
+
+plot(datW$doy, datW$soil.moisture, xlab= "day of the year", ylab= "soil moisture")
+
+plot(datW$doy, datW$soil.temp, xlab= "day of the year", ylab= "soil temperature")
+
+plot(datW$doy, datW$air.temperature, xlab= "day of the year", ylab= "air temperature")
+
+plot(datW$doy, datW$precipitation, xlab= "day of the year", ylab= "precipitation")
