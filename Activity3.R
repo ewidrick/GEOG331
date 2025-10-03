@@ -129,9 +129,11 @@ datW$wind.speedQ1 <- ifelse(datW$precipitation  >= 2 & datW$lightning.acvitivy >
 #Asserting that the number of NA values is the same in both the wind.speedQ1 and air.tempQ2 columns
 assert((length(which(is.na(datW$air.tempQ2)))) == length(which(is.na(datW$wind.speedQ1))))
 
-plot(datW$DD , datW$air.tempQ2, xlab = "Day of Year", ylab = "air temperature (Q2) + wind speed (Q1) ",
+
+plot(datW$DD , datW$wind.speedQ1, xlab = "Day of Year", ylab = "wind speed",
      type="n")
 
-points(datW$DD[datW$wind.speedQ1 >= 0], datW$wind.speedQ1[datW$wind.speedQ1 >=0 , col= "tomato3", pch=19)
+lines(datW$DD, datW$wind.speed)
 
+points(datW$DD[datW$wind.speedQ1 >0],datW$wind.speed[datW$wind.speedQ1 >0] ,col= "tomato3", pch=19)
 
