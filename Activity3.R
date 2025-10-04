@@ -136,19 +136,21 @@ plot(datW$DD , datW$wind.speedQ1, xlab = "Day of Year", ylab = "wind speed",
 # add lines for the original wind speed
 lines(datW$DD, datW$wind.speed)
 
-point_NA <- datW$wind.speedQ1 
-  
-points(datW$DD,datW$wind.speedQ1[point_NA],col= "tomato3", pch=19)
+# points added with the new data
+points(datW$DD,datW$wind.speedQ1,col= "tomato3", pch=19)
 
 #A7
 
 #plot soil moisture and soil temp to see when the sensor cuts out
-plot(datW$doy, datW$soil.moisture)
-plot(datW$doy, datW$soil.temp)
+plot(datW$DD, datW$soil.moisture, xlab= "day of the year", ylab= "soil moisture")
 
-#plot air temperature and precipitation and observe the values leading up to day 192
-plot(datW$doy, datW$air.temperature)
-plot(datW$doy, datW$precipitation)
+plot(datW$DD, datW$soil.temp, xlab= "day of the year", ylab= "soil temperature")
+
+# plot air temp and precipitation to see if data looks reliable leading up to outage
+plot(datW$DD, datW$air.temperature, xlab= "day of the year", ylab= "air temperature")
+
+plot(datW$DD, datW$precipitation, xlab= "day of the year", ylab= "precipitation")
+
 
 #A8
 
@@ -184,10 +186,13 @@ TO - length(which(is.na(datW$precipitation)))
 
 #A9
 
-plot(datW$doy, datW$soil.moisture, xlab= "day of the year", ylab= "soil moisture")
+# make a plot with all dependent variables using the same independent variable
 
-plot(datW$doy, datW$soil.temp, xlab= "day of the year", ylab= "soil temperature")
+plot(datW$DD, datW$soil.moisture, xlab= "day of the year", ylab= "soil moisture")
 
-plot(datW$doy, datW$air.temperature, xlab= "day of the year", ylab= "air temperature")
+plot(datW$DD, datW$soil.temp, xlab= "day of the year", ylab= "soil temperature")
 
-plot(datW$doy, datW$precipitation, xlab= "day of the year", ylab= "precipitation")
+plot(datW$DD, datW$air.temperature, xlab= "day of the year", ylab= "air temperature")
+
+plot(datW$DD, datW$precipitation, xlab= "day of the year", ylab= "precipitation")
+
