@@ -23,20 +23,19 @@ sl <- c(iris$Sepal.Length)
 sw <- c(iris$Sepal.Width)
 pl <- c(iris$Petal.Length)
 pw <- c(iris$Petal.Width)
-rm(sl,sw,pl,pw)
+
+
 # make list of new variables
 one_list <- list(sl, pl, sl)
 two_list <- list(sw, pw, pl)
 
+#New list to store regression values
+reg_list <- list()
 
 #for loop for a linear regression of each relationship
 for (i in 1:3){
-reg[i] <- lm(one_list[,i]~two_list[,i]) 
+reg_list[[i]] <- summary(lm(one_list[[i]]~two_list[[i]]))
 }
-
-#New list to store regression values
-reg_list <- list(reg1,reg2,reg3)
-
 
 #####################################
 ##### Part 2: data in dplyr     #####
