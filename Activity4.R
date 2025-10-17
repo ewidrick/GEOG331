@@ -47,7 +47,6 @@ height <- data.frame(Species = c("virginica","setosa","versicolor"),
                      Height.cm = c(60,100,11.8))
 
 
-
 #####################################
 ##### Part 3: plots in ggplot2  #####
 #####################################
@@ -56,10 +55,10 @@ height <- data.frame(Species = c("virginica","setosa","versicolor"),
 plot(iris$Sepal.Length,iris$Sepal.Width)
 
 #3a. now make the same plot in ggplot
-
+ggplot(data = iris, aes(x=Sepal.Length, y=Sepal.Width)) + geom_point(data = NULL)
 
 #3b. make a scatter plot with ggplot and get rid of  busy grid lines
-
+ggplot(data = iris, aes(x=Sepal.Length, y=Sepal.Width)) + geom_point(data = NULL)
 
 #3c. make a scatter plot with ggplot, remove grid lines, add a title and axis labels, 
 #    show species by color, and make the point size proportional to petal length
