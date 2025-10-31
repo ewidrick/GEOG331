@@ -67,29 +67,34 @@ dev.new(width=8,height=8)
 #bigger margins
 par(mai=c(1,1,1,1))
 
+#Create vector for months
+m2017 <- c("2017","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec")
+
+#bigger margins
+par(mai=c(1,1,1,1))
 #make plot
 plot(aveF$doy,aveF$dailyAve, 
-     line(datD$doy[datD$year == 2017], datD$discharge [datD$year == 2017]), 
      type="l", 
      xlab="Year", 
      ylab=expression(paste("Discharge ft"^"3 ","sec"^"-1")),
      lwd=2,
-     ylim=c(0,366),
-     xlim = c(0,366),
+     ylim=c(0,300),
      xaxs="i", yaxs ="i",#remove gaps from axes
      axes=FALSE)#no axes
+lines(datD$doy[datD$year == 2017], datD$discharge [datD$year == 2017], col = "red")
 polygon(c(aveF$doy, rev(aveF$doy)),#x coordinates
         c(aveF$dailyAve-sdF$dailySD,rev(aveF$dailyAve+sdF$dailySD)),#ycoord
         col=rgb(0.392, 0.584, 0.929,.2), #color that is semi-transparent
         border=NA#no border
 )       
-axis(1, seq(0,360, by=40), #tick intervals
-     lab=seq(0,360, by=40)) #tick labels
-axis(2, seq(0,80, by=20),
-     seq(0,80, by=20),
+axis(1, seq(0,360, by=30), #tick intervals
+     labels = m2017)  #tick labels
+axis(2, seq(0,175, by=25),
+     seq(0,175, by=25),
      las = 2)#show ticks at 90 degree angle
-legend("topright", c("mean","1 standard deviation"), #legend items
-       lwd=c(2,NA),#lines
-       col=c("black",rgb(0.392, 0.584, 0.929,.2)),#colors
-       pch=c(NA,15),#symbols
+legend("topright", c("mean","2017","1 standard deviation"), #legend items
+       lwd=c(2,2,NA),#lines
+       col=c("black","red",rgb(0.392, 0.584, 0.929,.2)),#colors
+       pch=c(NA,NA,15),#symbols
        bty="n")#no legend border
+
