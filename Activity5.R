@@ -104,6 +104,6 @@ hours <- 0:24
 
 V1<- datP$doy
 # make a data frame for days with 24 hours of precipitation
-alldayP_df <- data.frame(datP$doy[datP$decYear == ])
+alldayP_df <- data.frame(datP$doy[datP$hour == hours ], datP$year[datP$hour == hours])
 
                          
