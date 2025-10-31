@@ -98,3 +98,12 @@ legend("topright", c("mean","2017","1 standard deviation"), #legend items
        pch=c(NA,NA,15),#symbols
        bty="n")#no legend border
 
+#Q7 
+# create a vector from 0 to 24
+hours <- 0:24
+
+V1<- datP$doy
+# make a data frame for days with 24 hours of precipitation
+alldayP_df <- data.frame(datP$doy[datP$decYear == ])
+
+                         
