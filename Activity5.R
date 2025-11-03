@@ -75,7 +75,7 @@ par(mai=c(1,1,1,1))
 #make plot
 plot(aveF$doy,aveF$dailyAve, 
      type="l", 
-     xlab="Year", 
+     xlab="2017", 
      ylab=expression(paste("Discharge ft"^"3 ","sec"^"-1")),
      lwd=2,
      ylim=c(0,300),
@@ -99,8 +99,8 @@ legend("topright", c("mean","2017","1 standard deviation"), #legend items
        bty="n")#no legend border
 
 #Q7 
-#load in dplyr
-library(dplyr)
+#load in tidyverse
+library(tidyverse)
 
 # make a new data frame
 alldayP <- datP %>%
@@ -110,4 +110,20 @@ group_by(doy,year) %>%
   
 # find the days with 24 observations
 filter(n() == 24)
+
+mutate(datH, )
+# make a plot with all discharge measurements and days with 24 hours of measurements
+plot.default(datD$decYear, datD$discharge, type = "l", xlim = NULL, ylim = NULL, xlab= "Time",
+ylab = expression(paste("Discharge ft"^"3 ","sec"^"-1")))
+
+
+# add points for precipitation measurements
+points.default(alldayP$decYear, alldayP$HPCP, col = "blue", pch = 19)
+
+#make a legend
+legend("topright", c("discharge", "precipitation on days with 24-hours of observations"), #legend items
+                      lwd=c(2,NA),#lines
+                      col=c("black","blue"),#colors
+                      pch=c(NA,19),#symbols
+                      bty="n")#no legend border
 
