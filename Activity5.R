@@ -88,7 +88,7 @@ polygon(c(aveF$doy, rev(aveF$doy)),#x coordinates
         border=NA#no border
 )       
 axis(1, seq(0,360, by=30), #tick intervals
-     labels = m2017)  #tick labels
+     lab = m2017)  #tick labels
 axis(2, seq(0,175, by=25),
      seq(0,175, by=25),
      las = 2)#show ticks at 90 degree angle
@@ -99,11 +99,15 @@ legend("topright", c("mean","2017","1 standard deviation"), #legend items
        bty="n")#no legend border
 
 #Q7 
-# create a vector from 0 to 24
-hours <- 0:24
+#load in dplyr
+library(dplyr)
 
-V1<- datP$doy
-# make a data frame for days with 24 hours of precipitation
-alldayP_df <- data.frame(datP$doy[datP$hour == hours ], datP$year[datP$hour == hours])
+# make a new data frame
+alldayP <- datP %>%
 
-                         
+#group the data by the doy and year
+group_by(doy,year) %>%
+  
+# find the days with 24 observations
+filter(n() == 24)
+
