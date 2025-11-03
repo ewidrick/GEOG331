@@ -193,3 +193,29 @@ for(i in 1:nrow(Q8hydroP)){
           col=rgb(0.392, 0.584, 0.929,.2), border=NA)}
 
 
+#specify year as a factor
+datD$yearPlot <- as.factor(datD$year)
+#make a boxplot
+ggplot(data= datD, aes(yearPlot,discharge)) + 
+  geom_boxplot()
+#make a violin plot
+ggplot(data= datD, aes(yearPlot,discharge)) + 
+  geom_violin()
+
+#Q9 
+#load ggplot2
+library(ggplot2)
+
+#make factor for seasons 
+DatD$season <- as.factor( case_when(doy >= 79  & doy < 172 ~ "Spring",
+                         doy >= 172 & doy < 264 ~ "Summer",
+                         doy >= 264 & doy < 355 ~ "Fall",
+                         TRUE ~ "Winter"  # everything else (end & start of year)
+))
+
+#2016 plot 
+
+ggplot(data= datD[datD$year == "2016",], aes(doy,discharge)) + 
+  geom_violin()
+
+#2017 plot
