@@ -127,3 +127,69 @@ legend("topright", c("discharge", "precipitation on days with 24-hours of observ
                       pch=c(NA,19),#symbols
                       bty="n")#no legend border
 
+#subset discharge and precipitation within range of interest
+hydroD <- datD[datD$doy >= 248 & datD$doy < 250 & datD$year == 2011,]
+hydroP <- datP[datP$doy >= 248 & datP$doy < 250 & datP$year == 2011,]
+
+#get minimum and maximum range of discharge to plot
+#go outside of the range so that it's easy to see high/low values
+#floor rounds down the integer
+yl <- floor(min(hydroD$discharge))-1
+#ceiling rounds up to the integer
+yh <- ceiling(max(hydroD$discharge))+1
+#minimum and maximum range of precipitation to plot
+pl <- 0
+pm <-  ceiling(max(hydroP$HPCP))+.5
+#scale precipitation to fit on the 
+hydroP$pscale <- (((yh-yl)/(pm-pl)) * hydroP$HPCP) + yl
+
+par(mai=c(1,1,1,1))
+#make plot of discharge
+plot(hydroD$decDay,
+     hydroD$discharge, 
+     type="l", 
+     ylim=c(yl,yh), 
+     lwd=2,
+     xlab="Day of year", 
+     ylab=expression(paste("Discharge ft"^"3 ","sec"^"-1")))
+#add bars to indicate precipitation 
+for(i in 1:nrow(hydroP)){
+  polygon(c(hydroP$decDay[i]-0.017,hydroP$decDay[i]-0.017,
+            hydroP$decDay[i]+0.017,hydroP$decDay[i]+0.017),
+          c(yl,hydroP$pscale[i],hydroP$pscale[i],yl),
+          col=rgb(0.392, 0.584, 0.929,.2), border=NA)}
+
+#Q8
+#subset discharge and precipitation within range of interest
+Q8hydroD <- datD[datD$doy >= 356 & datD$doy < 357 & datD$year == 2012,]
+Q8hydroP <- datP[datP$doy >= 356 & datP$doy < 357 & datP$year == 2012,]
+
+#get minimum and maximum range of discharge to plot
+#go outside of the range so that it's easy to see high/low values
+#floor rounds down the integer
+nyl <- floor(min(Q8hydroD$discharge))-1
+#ceiling rounds up to the integer
+nyh <- ceiling(max(Q8hydroD$discharge))+1
+#minimum and maximum range of precipitation to plot
+npl <- 0
+npm <-  ceiling(max(hydroP$HPCP))+.5
+#scale precipitation to fit on the 
+Q8hydroP$pscale <- (((nyh-nyl)/(npm-npl)) * Q8hydroP$HPCP) + nyl
+
+par(mai=c(1,1,1,1))
+#make plot of discharge
+plot(Q8hydroD$decDay,
+     Q8hydroD$discharge, 
+     type="l", 
+     ylim=c(nyl,nyh), 
+     lwd=2,
+     xlab="Day of year", 
+     ylab=expression(paste("Discharge ft"^"3 ","sec"^"-1")))
+#add bars to indicate precipitation 
+for(i in 1:nrow(Q8hydroP)){
+  polygon(c(Q8hydroP$decDay[i]-0.017,Q8hydroP$decDay[i]-0.017,
+            Q8hydroP$decDay[i]+0.017,Q8hydroP$decDay[i]+0.017),
+          c(yl,Q8hydroP$pscale[i],Q8hydroP$pscale[i],yl),
+          col=rgb(0.392, 0.584, 0.929,.2), border=NA)}
+
+
