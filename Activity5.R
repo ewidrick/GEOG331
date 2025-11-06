@@ -4,12 +4,10 @@ library(lubridate)
 # read in streamflow data
 datH <- read.csv("Z:\\ewidrick\\GitHub\\GEOG331\\Data\\hw5_data\\stream_flow_data.csv",
                  na.strings = c("Eqp"))
-head(datH)  
 
 #read in precipitation data
 #hourly precipitation is in mm
 datP <- read.csv("Z:\\ewidrick\\GitHub\\GEOG331\\Data\\hw5_data\\2049867.csv")                            
-head(datP)
 
 #only use most reliable measurements
 datD <- datH[datH$discharge.flag == "A",]
@@ -116,7 +114,6 @@ mutate(datH, )
 plot.default(datD$decYear, datD$discharge, type = "l", xlim = NULL, ylim = NULL, xlab= "Time",
              ylab = expression(paste("Discharge ft"^"3 ","sec"^"-1")))
 
-
 # add points for precipitation measurements
 points.default(alldayP$decYear, alldayP$HPCP, col = "blue", pch = 19)
 
@@ -195,16 +192,6 @@ for(i in 1:nrow(Q8hydroP)){
             Q8hydroP$decDay[i]+0.017,Q8hydroP$decDay[i]+0.017),
           c(yl,Q8hydroP$pscale[i],Q8hydroP$pscale[i],yl),
           col=rgb(0.392, 0.584, 0.929,.2), border=NA)}
-
-
-#specify year as a factor
-datD$yearPlot <- as.factor(datD$year)
-#make a boxplot
-ggplot(data= datD, aes(yearPlot,discharge)) + 
-  geom_boxplot()
-#make a violin plot
-ggplot(data= datD, aes(yearPlot,discharge)) + 
-  geom_violin()
 
 #Q9 
 
