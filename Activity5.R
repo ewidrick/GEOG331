@@ -75,7 +75,7 @@ par(mai=c(1,1,1,1))
 #make plot
 plot(aveF$doy,aveF$dailyAve, 
      type="l", 
-     xlab="2017", 
+     xlab="Year", 
      ylab=expression(paste("Discharge ft"^"3 ","sec"^"-1")),
      lwd=2,
      ylim=c(0,300),
@@ -99,8 +99,8 @@ legend("topright", c("mean","2017","1 standard deviation"), #legend items
        bty="n")#no legend border
 
 #Q7 
-#load in tidyverse
-library(tidyverse)
+#load in dplyr
+library(dplyr)
 
 # make a new data frame
 alldayP <- datP %>%
@@ -114,7 +114,7 @@ filter(n() == 24)
 mutate(datH, )
 # make a plot with all discharge measurements and days with 24 hours of measurements
 plot.default(datD$decYear, datD$discharge, type = "l", xlim = NULL, ylim = NULL, xlab= "Time",
-ylab = expression(paste("Discharge ft"^"3 ","sec"^"-1")))
+             ylab = expression(paste("Discharge ft"^"3 ","sec"^"-1")))
 
 
 # add points for precipitation measurements
@@ -122,10 +122,10 @@ points.default(alldayP$decYear, alldayP$HPCP, col = "blue", pch = 19)
 
 #make a legend
 legend("topright", c("discharge", "precipitation on days with 24-hours of observations"), #legend items
-                      lwd=c(2,NA),#lines
-                      col=c("black","blue"),#colors
-                      pch=c(NA,19),#symbols
-                      bty="n")#no legend border
+       lwd=c(2,NA),#lines
+       col=c("black","blue"),#colors
+       pch=c(NA,19),#symbols
+       bty="n")#no legend border
 
 #subset discharge and precipitation within range of interest
 hydroD <- datD[datD$doy >= 248 & datD$doy < 250 & datD$year == 2011,]
@@ -208,9 +208,9 @@ library(ggplot2)
 
 #make factor for seasons 
 DatD$season <- as.factor( case_when(doy >= 79  & doy < 172 ~ "Spring",
-                         doy >= 172 & doy < 264 ~ "Summer",
-                         doy >= 264 & doy < 355 ~ "Fall",
-                         TRUE ~ "Winter"  # everything else (end & start of year)
+                                    doy >= 172 & doy < 264 ~ "Summer",
+                                    doy >= 264 & doy < 355 ~ "Fall",
+                                    TRUE ~ "Winter"  # everything else (end & start of year)
 ))
 
 #2016 plot 
