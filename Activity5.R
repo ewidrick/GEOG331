@@ -160,6 +160,10 @@ for(i in 1:nrow(hydroP)){
           col=rgb(0.392, 0.584, 0.929,.2), border=NA)}
 
 #Q8
+
+#load in ggplot
+library(ggplot2)
+
 #subset discharge and precipitation within range of interest
 Q8hydroD <- datD[datD$doy >= 356 & datD$doy < 357 & datD$year == 2012,]
 Q8hydroP <- datP[datP$doy >= 356 & datP$doy < 357 & datP$year == 2012,]
@@ -203,19 +207,39 @@ ggplot(data= datD, aes(yearPlot,discharge)) +
   geom_violin()
 
 #Q9 
-#load ggplot2
-library(ggplot2)
+
+#vectors for seasons
+Spring <- c(29:172)
+Summer<- c(173:264)
+Fall <- c(265:355)
 
 #make factor for seasons 
-DatD$season <- as.factor( case_when(doy >= 79  & doy < 172 ~ "Spring",
-                                    doy >= 172 & doy < 264 ~ "Summer",
-                                    doy >= 264 & doy < 355 ~ "Fall",
-                                    TRUE ~ "Winter"  # everything else (end & start of year)
+datD <- datD %>% mutate(season = case_when(doy %in% Spring ~ "Spring",
+                                           doy %in% Summer ~ "Summer",
+                                           doy  %in% Fall ~ "Fall",
+                                           TRUE ~ "Winter"  # everything else (end & start of year)
 ))
 
 #2016 plot 
 
-ggplot(data= datD[datD$year == "2016",], aes(doy,discharge)) + 
-  geom_violin()
+#only use 2016 data
+yr16 <- datD %>% filter(year ==2016) 
 
+#make a violin plot for 2016
+ggplot(data= yr16, aes(season,discharge)) + 
+  geom_violin() +
+  labs(title = "2016 Discharge by Season",
+       x = "Season",
+       y = (expression(paste("Discharge ft"^"3 ","sec"^"-1"))))
+      
 #2017 plot
+
+#only use 2016 data
+yr17 <- datD %>% filter(year ==2017) 
+
+#make a violin plot for 2016
+ggplot(data= yr17, aes(season,discharge)) + 
+  geom_violin() +
+  labs(title = "2017 Discharge by Season",
+       x = "Season",
+       y = (expression(paste("Discharge ft"^"3 ","sec"^"-1"))))
