@@ -24,13 +24,19 @@ plot(datP$decYear, datP$PRCP, type="l", xlab="Time", ylab="Precipetation (in)",
      main = "Eugene-Mahlon Average Daily Precipitation Over 25 Years" )
 
 
-#vector for doy = summer
-Summer<- filter(datP$doy=c(173:264))
+#vector for summer
+Summer<- c(173:264)
 
+#make factor for seasons 
+datP <- datP %>% mutate(season = case_when(
+                                           doy %in% Summer ~ "Summer",
+                                           TRUE ~ "Not Summer"  # everything else (end & start of year)
+))
 
 #Make a Plot with Values during the summer
-ggplot(data = datP, mapping = aes(decYear, PRCP)) +
-theme(panel.grid.major = element_blank(),
-panel.grid.minor = element_blank()) + 
-geom_line(data =datP, aes(decYear, PRCP)) +
-geom_point(data =datP, aes(decYear[doy == Summer], PRCP))
+ggplot(datP, aes(decYear, PRCP, color = season)) + geom_point()+
+scale_color_manual(values = c("Summer" = "red", "Not Summer" = "black"))+ labs(
+  title = "Daily Average Precipetation Over 25 years at Eugene-Mahlon",
+  x = "Time",
+  y = "Daily average precipitation (in)"
+)
