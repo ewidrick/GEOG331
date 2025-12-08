@@ -19,10 +19,6 @@ datP$year <- year(datesD)
 datP$decYear <- ifelse(leap_year(datP$year),datP$year + (datP$doy/366),
                        datP$year + (datP$doy/365))
 
-#Plot the daily average for the past 25 years
-plot(datP$decYear, datP$PRCP, type="l", xlab="Time", ylab="Precipetation (in)", 
-     main = "Eugene-Mahlon Average Daily Precipitation Over 25 Years" )
-
 
 
 #make vectors for months
@@ -61,18 +57,41 @@ B7 <- datP %>% filter(STATION == "USC00350699")
 EM <- datP %>% filter(STATION == "USW00024221") 
 SAP <- datP %>% filter(STATION == "USW00024232")
 
-ggplot(data=datP, aes(month,(mean(datP$PRCP))))
+#take averages from each station
+datP_avg <- datP %>%
+  group_by(doy) %>%
+  summarise(mean_PRCP = mean(PRCP, na.rm = TRUE),
+            mean_AWND = mean(AWND, na.rm = TRUE),
+            mean_TMAX = mean(TMAX, na.rm = TRUE),
+            mean_TMIN = mean(TMIN, na.rm = TRUE))
 
-#make a violin plot for the months and order the x axis
-ggplot(data=PIA, aes(month,PRCP)) + geom_violin () +
-scale_x_discrete(limits =c("Jan","Feb","Mar","Apr","May","Jun",
-                           "Jul","Aug","Sep","Oct","Nov","Dec"))
-#Make a Plot with Values during the summer
-ggplot(datP, aes(decYear, PRCP, color = season)) + geom_point()+
-scale_color_manual(values = c("Summer" = "red", "Not Summer" = "black"))+ labs(
-  title = "Daily Average Precipetation Over 25 years at Eugene-Mahlon",
-  x = "Time",
-  y = "Daily average precipitation (in)"
-)
+datP_avg <- datP_avg %>% mutate(month = case_when(
+  doy %in% Jan ~ "Jan",
+  doy %in% Feb ~ "Feb",
+  doy %in% Mar ~ "Mar", 
+  doy %in% Apr ~ "Apr",
+  doy %in% May ~ "May",
+  doy %in% Jun ~ "Jun",
+  doy %in% Jul ~ "Jul",
+  doy %in% Aug ~ "Aug",
+  doy %in% Sep ~ "Sep",
+  doy %in% Oct ~ "Oct",
+  doy %in% Nov ~ "Nov",
+  doy %in% Dec ~ "Dec" ))
 
+# Make Violin plots for months of the year
+ggplot(data=datP_avg, aes(month,mean_PRCP)) + geom_violin () +
+  scale_x_discrete(limits =c("Jan","Feb","Mar","Apr","May","Jun",
+                             "Jul","Aug","Sep","Oct","Nov","Dec"))
 
+ggplot(data=datP_avg, aes(month,mean_AWND)) + geom_violin () +
+  scale_x_discrete(limits =c("Jan","Feb","Mar","Apr","May","Jun",
+                             "Jul","Aug","Sep","Oct","Nov","Dec"))
+
+ggplot(data=datP_avg, aes(month,mean_TMAX)) + geom_violin () +
+  scale_x_discrete(limits =c("Jan","Feb","Mar","Apr","May","Jun",
+                             "Jul","Aug","Sep","Oct","Nov","Dec"))
+
+ggplot(data=datP_avg, aes(month,mean_TMIN)) + geom_violin () +
+  scale_x_discrete(limits =c("Jan","Feb","Mar","Apr","May","Jun",
+                             "Jul","Aug","Sep","Oct","Nov","Dec"))
