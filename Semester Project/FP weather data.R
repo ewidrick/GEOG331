@@ -241,6 +241,7 @@ datE <- filter(datC_avg, decYear >= 2000)
 
 # add doy
 dates <- as.Date(datE$DATE, "%Y-%m-%d")
+
 datE$doy <- yday(dates)
 
 #filter data with extreme values like SEP 9th 2020
@@ -261,4 +262,25 @@ filter(mean_AWND >= 8.4666667, doy >= 152 & doy <= 305)
 #filter just for average temp
 datTemp <- datE %>%
 filter(mean_TAVG >= 19.850000, doy >= 152 & doy <= 305 )
+
+#Find how many days during fire season there was zero rain for each year
+
+datesE <- as.Date(datE$DATE, "%Y-%m-%d")
+
+#get day of year
+datE$doy <- yday(datesE)
+
+#calculate year
+datE$year <- year(datesE)
+
+#add years
+datE$year <- year(datE$DATE)
+
+ZeroP <-  datE %>%
+  filter(mean_PRCP == 0.0000000, doy >= 152 & doy <= 305)
+
+ZeroPYear <- ZeroP %>%
+  group_by(year) %>%
+ add_count(year)
+
 
