@@ -228,10 +228,13 @@ library(patchwork)
 p1a+p1b+p1c+p1d
 p2a+p2b+p2c+p2d
 # Extreme Values
-datC_avg$DATE <- round_date(date_decimal(datC_avg$decYear))
+datC_avg <- datC %>%
+  group_by(decYear) %>%
+  summarise(mean_PRCP = mean(PRCP, na.rm = TRUE),
+            mean_AWND = mean(AWND, na.rm = TRUE),
+            mean_TAVG = mean(TAVG, na.rm = TRUE))
 
-# Sum all important variables
-datC_avg$EV <- (datC_avg$mean_TEMP + datC_avg$mean_AWND - datC_avg$mean_PRCP)
+datC_avg$DATE <- round_date(date_decimal(datC_avg$decYear))
 
 #filter for dates in the 2000s
 datE <- filter(datC_avg, decYear >= 2000) 
@@ -242,7 +245,14 @@ datE$doy <- yday(dates)
 
 #filter data with extreme values like SEP 9th 2020
 LDFC <- datE %>%
-filter(mean_TEMP >= 19.850000, mean_AWND >= 8.4666667, mean_PRCP == 0.0000000)  
+filter(mean_TAVG >= 19.850000, mean_AWND >= 8.4666667, mean_PRCP == 0.0000000) 
+
+#adjust wind
+LDFC01 <- datE %>%
+  filter(mean_TAVG >= 19.850000, mean_AWND >= 5.000000, mean_PRCP == 0.0000000)
+
+LDFC02 <- datE %>%
+  filter(mean_TAVG >= 19.850000, mean_AWND >= 0, mean_PRCP == 0.0000000)
 
 #filter just for wind
 datWind <- datE %>%
@@ -250,5 +260,5 @@ filter(mean_AWND >= 8.4666667, doy >= 152 & doy <= 305)
 
 #filter just for average temp
 datTemp <- datE %>%
-filter(mean_TEMP >= 19.850000, doy >= 152 & doy <= 305 )
+filter(mean_TAVG >= 19.850000, doy >= 152 & doy <= 305 )
 
