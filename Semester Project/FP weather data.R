@@ -82,25 +82,25 @@ dat20_avg <- dat20_avg %>% mutate(month = case_when(
   doy %in% Dec ~ "Dec" ))
 
 #make violin plot with TAVG
-ggplot(data=dat20_avg, aes(month,mean_TAVG)) + geom_violin () +
+p1a <- ggplot(data=dat20_avg, aes(month,mean_TAVG)) + geom_violin () +
   scale_x_discrete(limits =c("Jun","Jul","Aug","Sep","Oct")) +
   labs(
     title = "1a.",
     x = "Month",
-    y = "Daily Average Temperature (C°)")
+    y = "Daily Average Temperature (C°)") + ylim(5, 35)
 
 
 #make violin plot with PRCP
-ggplot(data=dat20_avg, aes(month,mean_PRCP)) + geom_violin () +
+p2a <- ggplot(data=dat20_avg, aes(month,mean_PRCP)) + geom_violin () +
   scale_x_discrete(limits =c("Jun","Jul","Aug","Sep","Oct")) +
   labs(
     title = "2a.",
     x = "Month",
-    y = "Daily Average Precipitation (mm)")
+    y = "Daily Average Precipitation (mm)") + ylim(0, 35)
   
 #2013
   
-Dat2013 <- filter(datC, datC$year == 2020)
+Dat2013 <- filter(datC, datC$year == 2013)
 
 dat13_avg <- Dat2013 %>%
   group_by(doy) %>%
@@ -124,24 +124,25 @@ dat13_avg <- dat13_avg %>% mutate(month = case_when(
   doy %in% Dec ~ "Dec" ))
 
 #make violin plot with TAVG
-ggplot(data=dat13_avg, aes(month,mean_TAVG)) + geom_violin () +
+p1b <- ggplot(data=dat13_avg, aes(month,mean_TAVG)) + geom_violin () +
   scale_x_discrete(limits =c("Jun","Jul","Aug","Sep","Oct")) +
   labs(
     title = "1b.",
     x = "Month",
-    y = "Daily Average Temperature (C°)")
+    y = "Daily Average Temperature (C°)") + ylim(5, 35)
 
 
 #make violin plot with PRCP
-ggplot(data=dat13_avg, aes(month,mean_PRCP)) + geom_violin () +
+p2b <- ggplot(data=dat13_avg, aes(month,mean_PRCP)) + geom_violin () +
   scale_x_discrete(limits =c("Jun","Jul","Aug","Sep","Oct")) +
   labs(
     title = "2b.",
     x = "Month",
-    y = "Daily Average Precipitation (mm)")  
+    y = "Daily Average Precipitation (mm)")  + ylim(0, 35)
+
 #2002
   
-Dat2002 <- filter(datC, datC$year == 2020)
+Dat2002 <- filter(datC, datC$year == 2002)
 
 dat02_avg <- Dat2002 %>%
   group_by(doy) %>%
@@ -165,25 +166,25 @@ dat02_avg <- dat02_avg %>% mutate(month = case_when(
   doy %in% Dec ~ "Dec" ))
 
 #make violin plot with TAVG
-ggplot(data=dat02_avg, aes(month,mean_TAVG)) + geom_violin () +
+p1c <- ggplot(data=dat02_avg, aes(month,mean_TAVG)) + geom_violin () +
   scale_x_discrete(limits =c("Jun","Jul","Aug","Sep","Oct")) +
   labs(
     title = "1c.",
     x = "Month",
-    y = "Daily Average Temperature (C°)")
+    y = "Daily Average Temperature (C°)")  + ylim(5, 35)
 
 
 #make violin plot with PRCP
-ggplot(data=dat02_avg, aes(month,mean_PRCP)) + geom_violin () +
+p2c <- ggplot(data=dat02_avg, aes(month,mean_PRCP)) + geom_violin () +
   scale_x_discrete(limits =c("Jun","Jul","Aug","Sep","Oct")) +
   labs(
     title = "2c.",
     x = "Month",
-    y = "Daily Average Precipitation (mm)")  
+    y = "Daily Average Precipitation (mm)")  + ylim(0, 35)
   
 #2021
   
-Dat2021 <- filter(datC, datC$year == 2020)
+Dat2021 <- filter(datC, datC$year == 2021)
 
 dat21_avg <- Dat2021 %>%
   group_by(doy) %>%
@@ -207,22 +208,25 @@ dat21_avg <- dat21_avg %>% mutate(month = case_when(
   doy %in% Dec ~ "Dec" ))
 
 #make violin plot with TAVG
-ggplot(data=dat21_avg, aes(month,mean_TAVG)) + geom_violin () +
+p1d <- ggplot(data=dat21_avg, aes(month,mean_TAVG)) + geom_violin () +
   scale_x_discrete(limits =c("Jun","Jul","Aug","Sep","Oct")) +
   labs(
     title = "1d.",
     x = "Month",
-    y = "Daily Average Temperature (C°)")
+    y = "Daily Average Temperature (C°)") + ylim(5, 35)
 
-
-how #make violin plot with PRCP
-ggplot(data=dat21_avg, aes(month,mean_PRCP)) + geom_violin () +
+#make violin plot with PRCP
+p2d <- ggplot(data=dat21_avg, aes(month,mean_PRCP)) + geom_violin () +
   scale_x_discrete(limits =c("Jun","Jul","Aug","Sep","Oct")) +
   labs(
     title = "2d.",
     x = "Month",
-    y = "Daily Average Precipitation (mm)")  
+    y = "Daily Average Precipitation (mm)")  + ylim(0, 35)
 
+#arrange plots
+library(patchwork)
+p1a+p1b+p1c+p1d
+p2a+p2b+p2c+p2d
 # Extreme Values
 datC_avg$DATE <- round_date(date_decimal(datC_avg$decYear))
 
